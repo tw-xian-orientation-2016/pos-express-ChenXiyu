@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var express = require('express');
 var router = express.Router();
 
-mongoose.connect("mongodb://localhost/test1/");
+mongoose.connect("mongodb://localhost/test/");
 
 var item = mongoose.model("item",{
 	barcode:String,
@@ -78,6 +78,46 @@ router.post("/writeReceiptItems",function(req,res,next){
 			}
 		});
 	}
+});
+
+// remove cart
+router.all("/removeCart",function(req,res,next){
+	cart.remove({},function(err){
+		if(err){
+			console.log(err);
+		}
+	});
+});
+
+// get receiptItems
+router.get("/getReceiptItems",function(req,res,next){
+	res.contentType('json');
+	receiptItem.find({},function(err,receiptItems){
+		console.log(receiptItems);
+		res.json(receiptItems);
+	});
+});
+
+var receipt = mongoose.model("receipt",{
+	receiptContent : String,
+	total : String,
+	timestamp: String
+});
+
+// write receipt
+router.post("/writeReceipt",function(req,res,next){
+	var body = req.body;
+	var data = JSON.parse(body["data"]);	
+	console.log(data);
+	var r = new receipt;
+	r.receiptContent = data.receiptContent;
+	r.total = data.total;
+	r.timestamp = data.timestamp;
+	r.save(function(err){
+		if(err){
+			console.log(err)
+		}
+	});
 });
 
 function initDB(){
