@@ -23,7 +23,7 @@ function addToCart( e ){
 
 function updateCartNumber(){
 	$.getJSON("/getCarts",function(carts){
-  	$("[name='Cart']").text("Cart("+carts.length+")");
+	$("[name='Cart']").text("Cart("+carts.length+")");
 	});
 }
 
