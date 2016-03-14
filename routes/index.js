@@ -93,11 +93,18 @@ router.all("/removeCart",function(req,res,next){
 router.get("/getReceiptItems",function(req,res,next){
 	res.contentType('json');
 	receiptItem.find({},function(err,receiptItems){
-		console.log(receiptItems);
 		res.json(receiptItems);
 	});
 });
 
+// remove receiptItems
+router.all("/removeReceiptItems",function(req,res,next){
+	receiptItem.remove({},function(err){
+		if(err){
+			console.log(err);
+		}
+	});
+});
 var receipt = mongoose.model("receipt",{
 	receiptContent : String,
 	total : String,
@@ -108,7 +115,6 @@ var receipt = mongoose.model("receipt",{
 router.post("/writeReceipt",function(req,res,next){
 	var body = req.body;
 	var data = JSON.parse(body["data"]);	
-	console.log(data);
 	var r = new receipt;
 	r.receiptContent = data.receiptContent;
 	r.total = data.total;

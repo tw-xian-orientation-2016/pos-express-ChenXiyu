@@ -28,6 +28,7 @@ $(document).ready(function(){
 				timestamp:timestamp
 			};
 			addToReceiptList(receipt);
+			$.get("/removeReceiptItems");
 	});
 });
 
