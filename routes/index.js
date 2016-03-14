@@ -120,6 +120,14 @@ router.post("/writeReceipt",function(req,res,next){
 	});
 });
 
+// get receipts
+router.get("/getReceipts",function(req,res,next){
+	res.contentType('json');
+	receipt.find({},function(err,receipts){
+		res.json(receipts);
+	});
+});
+
 function initDB(){
 	// init database
 	var i = new item({
